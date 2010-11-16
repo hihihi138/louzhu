@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!--
+
+This is the base template.
+
+-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="google-site-verification" content="TBUPbhFoAhWSj7pdU11KUQRjxtF-x_epyE4YtRU2jE0" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<title>{% block title %}优酷精选{% endblock %}</title>
+<meta name="keywords" content="{% block metaKeywordsContent %}{% endblock %}" />
+<meta name="google-site-verification" content="TBUPbhFoAhWSj7pdU11KUQRjxtF-x_epyE4YtRU2jE0" />
+<meta name="description" content="{% block metaDescriptionContent %}{% endblock %}" />
+<link href="/static/default.css" rel="stylesheet" type="text/css" />
+<link href="/static/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+{% block javascript %}{% endblock %}
+</head>
+<body>
+<!-- start header -->
+<div id="header">
+</div>
+<!-- end header -->
+<!-- start page -->
+{% block page %}
+<div id="page">
+</div>
+{% endblock %}
+<!-- end page -->
+<!-- start footer -->
+<div id="footer">
+</div>
+<!-- end footer -->
+</body>
+</html>
+

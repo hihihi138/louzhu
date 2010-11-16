@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block metaKeywordsTitle %}网站建设日志{% endblock %}
+{% block metaKeywordsContent %}优酷,优酷精选,视频,视频分享,在线视频{% endblock %}
+{% block metaDescriptionContent %}网站建设日志。{% endblock %}
+
+
+{% block page %}
+    <!-- start content -->
+    <div id="content">
+        {% for segment in object_list %}
+            <div class="post">
+                <div class="title">
+                    <h2>名字：{{ segment.post.name }}</a></h2>
+                    <p><small>发布时间 {{ segment.date }}</small></p>
+                </div>
+                <div class="log_entry">                
+                   内容：{{ segment.content|linebreaks }}
+                </div>
+            </div>
+        {% endfor %}
+		
+    </div>
+    <!-- end content -->
+{% endblock %}
