@@ -19,7 +19,7 @@ class Post(models.Model):
 		return self.name
 		
 	class Meta:
-		ordering = ['-post_date']
+		ordering = ['post_date']
         
 class Segment(models.Model):
 	post = models.ForeignKey(Post, verbose_name='帖子')
@@ -29,4 +29,4 @@ class Segment(models.Model):
 	def __unicode__(self):
 		return self.post.name
 	class Meta:
-		ordering = ['-date']
+		ordering = ['date']

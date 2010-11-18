@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
 
-	(r'^$', 'louzhu.views.main'),
-	(r'^http://www.douban.com/group/topic/(\d+)/$', 'louzhu.douban.views.post'),
+	(r'^$', 'views.main'),
+	(r'^http://www.douban.com/group/topic/', include('douban.urls')),
+	(r'^douban/', include('douban.urls')),
 )
