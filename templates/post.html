@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 
-{% block metaKeywordsTitle %}网站建设日志{% endblock %}
-{% block metaKeywordsContent %}优酷,优酷精选,视频,视频分享,在线视频{% endblock %}
-{% block metaDescriptionContent %}网站建设日志。{% endblock %}
+{% block metaKeywordsTitle %}Louzhu.com{% endblock %}
+{% block metaKeywordsContent %}Louzhu.com{% endblock %}
+{% block metaDescriptionContent %}Louzhu.com{% endblock %}
 
 
 {% block page %}
     <!-- start content -->
     <div id="content">
-    	<h2>{{ name }}</a></h2>
+    	<h1>{{ name }}</a></h1>
+    	<ul class="segments">
         {% for segment in object_list %}
-            <div class="post">
-                <div class="title">
-                    <p><small>{{ segment.date }}  {{ author }}</small></p>
+            <li class="segment">
+                <div class="green-banner">
+                    <h4>{{ segment.date|date:"Y-m-d H:i:s" }} <a href="{{ author_url }}">{{ author }}</a><small>#{{ forloop.counter }}</small></h4>
                 </div>
-                <div class="log_entry">                
-                   {{ segment.content|linebreaks }}
-                </div>
-            </div>
+                {{ segment.content|safe }}
+            </li>
         {% endfor %}
+    	</ul>
     </div>
     <!-- end content -->
 {% endblock %}

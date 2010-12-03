@@ -1,0 +1,104 @@
+
+/*
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+/* @charset "utf-8"; */
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #FFFFFF;
+	font: normal normal normal 12px/normal Arial, Helvetica, sans-serif;
+	color: #111111;
+	line-height: 162%;
+}
+
+h1, h1 a, h4, h4 a {
+	margin: 0;
+	text-decoration: none;
+	font-weight: normal;
+	color: #444444;
+}
+
+a:link {
+	color: #336699; text-decoration: none;
+}
+
+a:visited {
+	color: #666699; text-decoration: none;
+}
+
+a:hover {
+	color: #FFFFFF; text-decoration: none; background: #003399;
+}
+
+a:active {
+	color: #FFFFFF; text-decoration: none; background: #FF9933;
+}
+
+ul {
+	list-style: none;
+}
+
+h1 {
+	letter-spacing: -1px;
+	font-size: 25px;
+	font-weight: bold;
+	line-height: 1.1;
+	color: #494949;
+	display: block;
+}
+
+h4 {
+	color: #666666;
+	margin: 0px 0px 10px 0px;
+	overflow: hidden;
+	display: block;
+}
+
+h4 a {
+	color: #336699;
+}
+
+#content {
+	margin: 0 20px;
+}
+
+#content h1 {
+	margin: 20px 10px 40px 30px;
+}
+
+.green-banner {
+	background-color: #EEFFEE;
+	height: 22px;
+	padding: 0px;
+	margin: 0 0 15px 0;
+	display: block;
+}
+
+.green-banner h4 {
+	margin: 0px 0px 15px 4px;
+	height: 22px;
+	line-height: 22px;
+}
+
+
+.green-banner small {
+  float :right;
+  padding: 0 10px 0 0;
+}
+
+.segment {
+	margin: 0px 0px 40px 48px;
+	width: 573px;
+}
+
+.segment p {
+	margin: 0px 0px 25px 0px;
+	overflow: hidden;
+	word-wrap: break-word;
+	display: block;
+	line-height: 162%;
+}
