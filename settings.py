@@ -22,7 +22,8 @@ if socket.gethostname() in ('harness-test.bej.corp.google.com', 'Muer Workstatio
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
 else:
-    DEBUG =    TEMPLATE_DEBUG = False
+    DEBUG =  False
+    TEMPLATE_DEBUG = DEBUG
     
     DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
     DATABASE_NAME = 'louzhu_mydata'             # Or path to database file if using sqlite3.
@@ -42,7 +43,7 @@ ADMINS = (
     # ('Your Name', 'your_email@domain.com'),
     ('Muer', 'hihihi138@gmail.com'),
 )
-SEND_BROKEN_LINK_EMAILS = True
+SEND_BROKEN_LINK_EMAILS = False
 MANAGERS = ADMINS
 
 # Local time zone for this installation. Choices can be found here:
