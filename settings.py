@@ -1,27 +1,49 @@
-# Django settings for louzhu project.
+# Django settings for bestyouku project.
 import os
-
-DEBUG = True
-TEMPLATE_DEBUG = DEBUG
+import socket
 
 ROOT_PATH = os.path.dirname(__file__)
 
+if socket.gethostname() in ('harness-test.bej.corp.google.com', 'Muer Workstation', 'liujun-glaptop'):
+    DEBUG = True
+    TEMPLATE_DEBUG = DEBUG
+    
+    DATABASE_ENGINE = 'sqlite3'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+    DATABASE_NAME = ROOT_PATH+'/louzhu.db'             # Or path to database file if using sqlite3.
+    DATABASE_USER = ''             # Not used with sqlite3.
+    DATABASE_PASSWORD = ''         # Not used with sqlite3.
+    DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+    DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+    
+    # Email Host
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_HOST_USER = 'bestyouku520@gmail.com'
+    EMAIL_HOST_PASSWORD = 'youkujingxuan'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+else:
+    DEBUG =    TEMPLATE_DEBUG = False
+    
+    DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+    DATABASE_NAME = 'louzhu_mydata'             # Or path to database file if using sqlite3.
+    DATABASE_USER = 'louzhu'             # Not used with sqlite3.
+    DATABASE_PASSWORD = '3351808'         # Not used with sqlite3.
+    DATABASE_HOST = 'mysql.alwaysdata.com'             # Set to empty string for localhost. Not used with sqlite3.
+    DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+    
+    EMAIL_HOST = 'smtp.alwaysdata.com'
+    EMAIL_HOST_USER = 'louzhu@alwaysdata.net'
+    EMAIL_HOST_PASSWORD = '3351808'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    DEFAULT_FROM_EMAIL = 'no-reply@louzhu.com'
+
 ADMINS = (
+    # ('Your Name', 'your_email@domain.com'),
     ('Muer', 'hihihi138@gmail.com'),
 )
-
+SEND_BROKEN_LINK_EMAILS = True
 MANAGERS = ADMINS
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': ROOT_PATH+'/louzhu.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name

@@ -14,7 +14,10 @@ def post(request, slug):
 	except ObjectDoesNotExist:
 		add_post(slug)
 		post = Post.objects.get(slug=slug)
-	get_segment(slug, post)
+	page = get_segment(slug, post)
+	if post.page != page:
+		post.page = page
+		post.save()
 	segments = Segment.objects.filter(post=post)
 	extra_context = {'name': post.name, 'author': post.author, 'author_url': post.author_url}
 	return object_list(request, template_name='post.html', queryset=segments, paginate_by=50, extra_context=extra_context)
@@ -30,7 +33,7 @@ def add_post(slug):
 		d = re.findall(r'<span class="color-green">(.*?)</span>', data, re.S)[0]
 		post_date = datetime.strptime(d, "%Y-%m-%d %H:%M:%S")
 		last_date = datetime.now()
-		p = Post(name=name,url=url,author=author,author_url=author_url,post_date=post_date,last_date=last_date,slug=slug)
+		p = Post(name=name,url=url,author=author,author_url=author_url,post_date=post_date,last_date=last_date,slug=slug,page=0)
 		p.save()
 		content = re.findall(r'<p>(.*?)</p>', data, re.S)[0].strip()
 		s = Segment(post = p, date = post_date, content = content)
@@ -39,19 +42,22 @@ def add_post(slug):
 		return "There is something wrong when parsing the page."
 
 def get_segment(slug, post):
-	html = urllib.urlopen('http://www.douban.com/group/topic/'+slug)
+	html = urllib.urlopen('http://www.douban.com/group/topic/'+slug+'/?start='+str(post.page))
 	data = html.read()
-	author = re.findall(r'<span class="pl20">.*?">(.*?)</a>', data, re.S)[0].strip()
+	author = post.author
+	page = post.page
 	parse_segment(data, post, author)
 	try:
 		nextPage = re.findall(r'<span class="next"><a href="(.*?)">', data, re.S)
 		while nextPage:
-			print "yes"
+			print "One more page is found: " + nextPage[0].strip()
+			page = page +100
 			data = urllib.urlopen(nextPage[0].strip()).read()
 			parse_segment(data, post, author)
 			nextPage = re.findall(r'<span class="next"><a href="(.*?)">', data, re.S)
 	except IndexError:
 		print "This is the last page."
+	return page
 		
 def parse_segment(data, post, author):
 	segments = re.findall(r'(<li class="clearfix">.*?</li>)', data, re.S)

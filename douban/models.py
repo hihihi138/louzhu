@@ -11,6 +11,7 @@ class Post(models.Model):
 	last_date = models.DateTimeField(verbose_name='最后更新')
 	intro = models.TextField(max_length=4096, blank=True, verbose_name='帖子简介')
 	slug = models.SlugField(max_length=15)
+	page = models.IntegerField(max_length=3, verbose_name='总页数')
 	
 	def get_absolute_url(self):
 		return '/%s/' % self.slug
