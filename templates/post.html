@@ -13,12 +13,13 @@
         {% for segment in object_list %}
             <li class="segment">
                 <div class="green-banner">
-                    <h4>{{ segment.date|date:"Y-m-d H:i:s" }} <a href="{{ author_url }}">{{ author }}</a><small>#{{ forloop.counter }}</small></h4>
+                    <h4>{{ segment.date|date:"Y-m-d H:i:s" }} <a href="{{ author_url }}">{{ author }}</a><small></small></h4>
                 </div>
-                {{ segment.content|safe }}
+                <p>{{ segment.content|safe }}</p>
             </li>
         {% endfor %}
     	</ul>
+    	{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
     </div>
     <!-- end content -->
 {% endblock %}

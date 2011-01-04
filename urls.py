@@ -18,6 +18,9 @@ urlpatterns = patterns('',
 
 	(r'^$', 'views.main'),
 	(r'^http://www.douban.com/group/topic/', include('douban.urls')),
+	(r'^www.douban.com/group/topic/', include('douban.urls')),
+	(r'^douban.com/group/topic/', include('douban.urls')),
+	(r'^group/topic/', include('douban.urls')),
 	(r'^douban/', include('douban.urls')),
 	
 	# static files
