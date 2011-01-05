@@ -11,7 +11,9 @@ from datetime import datetime
 def post(request, slug):
 	try:
 		post = Post.objects.get(slug=slug)
+		print "The post is already in database."
 	except ObjectDoesNotExist:
+		print "New post, add it."
 		add_post(slug)
 		post = Post.objects.get(slug=slug)
 	page = get_segment(slug, post)
@@ -42,10 +44,14 @@ def add_post(slug):
 		return "There is something wrong when parsing the page."
 
 def get_segment(slug, post):
-	html = urllib.urlopen('http://www.douban.com/group/topic/'+slug+'/?start='+str(post.page))
+	url = 'http://www.douban.com/group/topic/'+slug+'/?start='+str(post.page)
+	html = urllib.urlopen(url)
 	data = html.read()
-	author = post.author
+	author = post.author.encode('UTF-8')
+	print "The LZ is " + author
 	page = post.page
+	print "url is:"
+	print url
 	parse_segment(data, post, author)
 	try:
 		nextPage = re.findall(r'<span class="next"><a href="(.*?)">', data, re.S)
@@ -63,15 +69,18 @@ def parse_segment(data, post, author):
 	segments = re.findall(r'(<li class="clearfix">.*?</li>)', data, re.S)
 	for seg in segments:
 		try:
-			re.findall(r'alt="'+author+'"/>', seg, re.S)[0].strip()
+			print re.findall(r'alt="'+author+'"/>', seg, re.S)[0].strip()
+			print "This seg is posted by LZ."
 			d = re.findall(r'<h4>(.*)\n', seg)[0].strip()
 			date = datetime.strptime(d, "%Y-%m-%d %H:%M:%S")
 			try:
 				Segment.objects.get(date=date)
+				print "The segment is already in database."
 			except ObjectDoesNotExist:
+				print "Add the segment to database."
 				content = re.findall(r'<p>(.*)</p>', seg, re.S)[0].strip()
 				s = Segment(post = post, date = date, content = content)
 				s.save()
 		except IndexError:
-			pass
+			print "This segment is not posted by LZ."
 		

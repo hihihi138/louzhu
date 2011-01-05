@@ -1,7 +1,7 @@
 <div class="pager">
    {% if has_previous %}
       <span class="page">
-      <a href="?page={{ previous }}">&lt; 上一页</a>
+      <a href="?page={{ previous }}">&lt;前页  </a>
       </span>
    {% endif %}
 
@@ -22,6 +22,6 @@
       <span class="page"><a href="?page=last">{{ pages }}</a></span>
    {% endif %}
    {% if has_next %}
-      <span class="page"><a href="?page={{ next }}">下一页 &gt;</a></span>
+      <span class="page"><a href="?page={{ next }}">  后页&gt;</a></span>
    {% endif %}
 </div>

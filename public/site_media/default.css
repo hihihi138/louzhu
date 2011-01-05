@@ -102,3 +102,31 @@ h4 a {
 	display: block;
 	line-height: 162%;
 }
+
+/* Pager */
+.pager {
+	padding-left: 200px;
+	margin-bottom: 15px;
+	font: 14px Arial, Helvetica, sans-serif;
+	color: #369;
+	line-height: 150%;
+	text-align: center; 
+}
+.pager a, .pager .current {
+	display: block;
+    float: left;
+	margin: 2px;
+	padding: 0px 4px;
+}
+.pager .current {
+	color: #FFFFFF;
+	background: #83BF73;	
+}
+
+.pager a:hover {
+    color: #FFF
+}
+.pager .ellipsis {
+	color: #51AECA;
+	float: left;
+}
