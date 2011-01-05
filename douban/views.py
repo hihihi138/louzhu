@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from douban.models import Post, Segment
 from django.core.paginator import Paginator, InvalidPage, EmptyPage
 from django.views.generic.list_detail import object_list
@@ -9,11 +9,14 @@ import urllib, re
 from datetime import datetime
 
 def post(request, slug):
+	path = '/douban/'+slug+'/'
+	if request.path != (path):
+		return redirect(path)
 	try:
 		post = Post.objects.get(slug=slug)
 		print "The post is already in database."
 	except ObjectDoesNotExist:
-		print "New post, add it."
+		print "New post, add it now."
 		add_post(slug)
 		post = Post.objects.get(slug=slug)
 	page = get_segment(slug, post)
@@ -48,9 +51,8 @@ def get_segment(slug, post):
 	html = urllib.urlopen(url)
 	data = html.read()
 	author = post.author.encode('UTF-8')
-	print "The LZ is " + author
 	page = post.page
-	print "url is:"
+	print "start from:"
 	print url
 	parse_segment(data, post, author)
 	try:
@@ -69,18 +71,15 @@ def parse_segment(data, post, author):
 	segments = re.findall(r'(<li class="clearfix">.*?</li>)', data, re.S)
 	for seg in segments:
 		try:
-			print re.findall(r'alt="'+author+'"/>', seg, re.S)[0].strip()
-			print "This seg is posted by LZ."
+			re.findall(r'alt="'+author+'"/>', seg, re.S)[0].strip()
 			d = re.findall(r'<h4>(.*)\n', seg)[0].strip()
 			date = datetime.strptime(d, "%Y-%m-%d %H:%M:%S")
 			try:
 				Segment.objects.get(date=date)
-				print "The segment is already in database."
 			except ObjectDoesNotExist:
-				print "Add the segment to database."
 				content = re.findall(r'<p>(.*)</p>', seg, re.S)[0].strip()
 				s = Segment(post = post, date = date, content = content)
 				s.save()
 		except IndexError:
-			print "This segment is not posted by LZ."
+			pass
 		

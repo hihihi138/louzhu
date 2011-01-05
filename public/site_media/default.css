@@ -103,6 +103,22 @@ h4 a {
 	line-height: 162%;
 }
 
+/* Search Form */
+#search_form {
+	margin-top: 200px;
+  	text-align: center;
+}
+#main_search {
+	width: 450px;
+	height: 30px;
+	font-size:18px;
+}
+#main_submit {
+ 	margin-left:10px;
+ 	width:80px;
+ 	height:37px;
+}
+
 /* Pager */
 .pager {
 	padding-left: 200px;
