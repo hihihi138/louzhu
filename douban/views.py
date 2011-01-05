@@ -7,7 +7,9 @@ from django.views.generic.list_detail import object_list
 from django.core.exceptions import ObjectDoesNotExist
 import urllib, re
 from datetime import datetime
+from django.views.decorators.cache import cache_page
 
+@cache_page(60 * 5)
 def post(request, slug):
 	path = '/douban/'+slug+'/'
 	if request.path != (path):
