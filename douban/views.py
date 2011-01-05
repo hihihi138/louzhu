@@ -24,7 +24,7 @@ def post(request, slug):
 		post.page = page
 		post.save()
 	segments = Segment.objects.filter(post=post)
-	extra_context = {'name': post.name, 'author': post.author, 'author_url': post.author_url}
+	extra_context = {'name': post.name, 'url': post.url, 'author': post.author, 'author_url': post.author_url}
 	return object_list(request, template_name='post.html', queryset=segments, paginate_by=50, extra_context=extra_context)
 	
 def add_post(slug):
