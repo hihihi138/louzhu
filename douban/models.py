@@ -12,6 +12,8 @@ class Post(models.Model):
 	intro = models.TextField(max_length=4096, blank=True, verbose_name='帖子简介')
 	slug = models.SlugField(max_length=15)
 	page = models.IntegerField(max_length=3, verbose_name='总页数')
+	dgroup = models.CharField(max_length=100, verbose_name='小组')
+	dgroup_url = models.URLField(verbose_name='小组地址')
 	
 	def get_absolute_url(self):
 		return '/%s/' % self.slug

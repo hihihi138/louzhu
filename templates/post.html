@@ -4,22 +4,45 @@
 {% block metaKeywordsContent %}Louzhu.com{% endblock %}
 {% block metaDescriptionContent %}Louzhu.com{% endblock %}
 
+{% block header %}
+	<div id="header">
+		<div class="douban_nav">
+			<div class="douban_nav_logo">
+				<a href="/"><img border="0" src="/static/images/logo.png" alt="首页"></a>
+			</div>
+			<div class="bd">
+				<div class="douban_nav_items"> 
+			        <ul> 
+				        <li><a href="http://www.douban.com">豆瓣首页</a></li> 
+						<li><a href="http://www.douban.com/mine/">你的豆瓣</a></li> 
+						<li><a href="http://www.douban.com/group/">你的小组</a></li> 
+			        </ul> 
+			    </div>
+			</div>
+		</div> 
+	</div>
+{% endblock %}
 
 {% block page %}
     <!-- start content -->
     <div id="content">
     	<h1><a href="{{ url }}">{{ name }}</a></h1>
-    	<ul class="segments">
-        {% for segment in object_list %}
-            <li class="segment">
-                <div class="green-banner">
-                    <h4>{{ segment.date|date:"Y-m-d H:i:s" }} <a href="{{ author_url }}">{{ author }}</a><small></small></h4>
-                </div>
-                <p>{{ segment.content|safe }}</p>
-            </li>
-        {% endfor %}
-    	</ul>
-    	{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+    	<div class="article">
+	    	<ul class="segments">
+	        {% for segment in object_list %}
+	            <li class="segment">
+	                <div class="green-banner">
+	                    <h4>{{ segment.date|date:"Y-m-d H:i:s" }} <a href="{{ author_url }}">{{ author }}</a><small></small></h4>
+	                </div>
+	                <p>{{ segment.content|safe }}</p>
+	            </li>
+	        {% endfor %}
+	    	</ul>
+	    	{% if is_paginated %}{% load paginator %}{% paginator 3 %}{% endif %}
+	    </div>
+	    <div class="aside">
+	    	<p>&gt; <a href="{{ dgroup_url }}">回{{ dgroup }}小组</a></p><br/> 
+	    </div>
     </div>
     <!-- end content -->
 {% endblock %}
