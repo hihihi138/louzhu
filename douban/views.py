@@ -10,7 +10,7 @@ from datetime import datetime
 from django.views.decorators.cache import cache_page
 import threading
 
-#@cache_page(60 * 5)
+@cache_page(60 * 5)
 def post(request, slug):
 	# Format the paths to /douban/slug/
 	path = '/douban/'+slug+'/'
