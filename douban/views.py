@@ -9,8 +9,9 @@ import urllib, re
 from datetime import datetime
 from django.views.decorators.cache import cache_page
 import threading
+#from helpers.work import *
 
-@cache_page(60 * 5)
+#@cache_page(60 * 5)
 def post(request, slug):
 	# Format the paths to /douban/slug/
 	path = '/douban/'+slug+'/'
@@ -42,7 +43,7 @@ def post(request, slug):
 	
 	# Render with template.
 	segments = Segment.objects.filter(post=post)
-	extra_context = {'name': post.name, 'url': post.url, 'author': post.author, 'author_url': post.author_url, 'dgroup': post.dgroup}
+	extra_context = {'name': post.name, 'url': post.url, 'author': post.author, 'author_url': post.author_url, 'dgroup': post.dgroup, 'dgroup_url': post.dgroup_url}
 	return object_list(request, template_name='post.html', queryset=segments, paginate_by=50, extra_context=extra_context)
 	
 def add_post(slug, data):
@@ -56,7 +57,7 @@ def add_post(slug, data):
 		last_date = datetime.now()
 		dgroup = re.findall(r'/">回(.*)小组</a></p><br/>', data, re.S)[0]
 		dgroup_url = re.findall(r'&gt; <a href="(.*)">回', data, re.S)[0]
-		p = Post(name=name,url=url,author=author,author_url=author_url,post_date=post_date,last_date=last_date,slug=slug,page=1,dgroup=dgroup, dgroup_url=dgroup_url)
+		p = Post(name=name,url=url,author=author,author_url=author_url,post_date=post_date,last_date=last_date,slug=slug,page=1,dgroup=dgroup,dgroup_url=dgroup_url)
 		p.save()
 		content = re.findall(r'<p>(.*?)</p>', data, re.S)[0].strip()
 		s = Segment(post = p, date = post_date, content = content)
@@ -74,24 +75,16 @@ def get_segment(post, page):
 		t.start()
 	for t in threads:
 		t.join()
-#	
-#	i=0
-#	while i<threads.__len__() and threading.active_count()<11:
-#			t[i].start
-#			i = i+1
-#	
-#		
-#	p = post.page
-#	while (p+10) <= int(page):
-#		threads = []
-#		for pp in xrange(p, p+10):
-#			threads.append(threading.Thread(target=parse_segment, args=(post, p)))
-#		for t in threads:
-#			t.start()
-#		for t in threads:
-#			t.join()
-#		p=p+10
-	
+
+#def get_segment(post, page):
+#	global database_lock 
+#	database_lock = threading.Lock()
+#	wm = WorkerManager(10)
+#	for p in xrange(post.page, int(page)+1):
+#		wm.add_job(parse_segment, post, p)
+#	wm.start()
+#	wm.wait_for_complete()
+#	print "done"
 		
 def parse_segment(post, p):
 	global database_lock
