@@ -9,6 +9,7 @@ import urllib, re
 from datetime import datetime
 from django.views.decorators.cache import cache_page
 import threading
+from helpers.threadpool import *
 #from helpers.work import *
 
 #@cache_page(60 * 5)
@@ -65,26 +66,30 @@ def add_post(slug, data):
 	except IndexError:
 		return "There was something wrong while creating the post."
 
-def get_segment(post, page):
-	global database_lock 
-	database_lock = threading.Lock()
-	threads = []
-	for p in xrange(post.page, int(page)+1):
-		threads.append(threading.Thread(target=parse_segment, args=(post, p)))
-	for t in threads:
-		t.start()
-	for t in threads:
-		t.join()
-
 #def get_segment(post, page):
 #	global database_lock 
 #	database_lock = threading.Lock()
-#	wm = WorkerManager(10)
+#	threads = []
 #	for p in xrange(post.page, int(page)+1):
-#		wm.add_job(parse_segment, post, p)
-#	wm.start()
-#	wm.wait_for_complete()
-#	print "done"
+#		threads.append(threading.Thread(target=parse_segment, args=(post, p)))
+#	for t in threads:
+#		t.start()
+#	for t in threads:
+#		t.join()
+
+def get_segment(post, page):
+	global database_lock
+	database_lock = threading.Lock()
+	args = []
+	for p in xrange(post.page, int(page)+1):
+		args.append(((post,p), {}))
+	requests = makeRequests(parse_segment, args)
+	# Define the muti-thread number.
+	pool = ThreadPool(5)
+	for req in requests:
+		pool.putRequest(req)
+		print "Work request #%s added." % req.requestID
+	pool.wait()
 		
 def parse_segment(post, p):
 	global database_lock
