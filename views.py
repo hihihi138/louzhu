@@ -7,3 +7,6 @@ def main(request):
 		return redirect('/'+url, permanent=True)
 	else:
 		return render_to_response('main_search_form.html')
+	
+def format_douban_url(requeset, url_tail):
+	return redirect('/douban/'+url_tail, permanent=True)
